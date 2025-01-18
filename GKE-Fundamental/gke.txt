@@ -1,0 +1,50 @@
+1. kuberntes Strucuture?
+    Kubernetes is an container orchestration tool, where we can deploy and manage our micro service application .
+  There is two main nodes 
+  1. Master Node : Its a control plane
+  2. Worker Nodes : Its a worker node where we are deploying application 
+
+2. GKE cluster mode?
+        Standard Cluster  -  Fully managed Kubernetes cluster, we have to manage control plane, nodes pools , version upgrade
+        Autopilot Cluster -  Fully managed by google cloud, no management of node pool
+
+        
+
+2. Componentes in Master node and Worker Node?
+    Master Node : 
+      Api Server : The kube-apiserver is the control plane component that serves as the primary management entity for the cluster. It handles all communication and authentication, and controls all other
+                    components of the cluster. Additionally, the kube-apiserver is also responsible for monitoring and controlling the state of the cluster, making sure that all components are running as expected.
+     Etcd        : Etcd is a distributed key-value database that is used by Kubernetes to store cluster state
+                  data. It is responsible for maintaining the configuration details of the Kubernetes cluster and is the only component that interacts directly with the kube-apiserver. etcd provides a reliable and highly available data store for Kubernetes, ensuring that the cluster can recover quickly from failures and maintain consistency across all nodes.
+     Kuber Scheduler : The kube-scheduler is responsible for assigning newly created pods to nodes in the cluster. It reads the list of unassigned pods from etcd and, using a variety of algorithms and configurations,
+                      determines which node each pod should run on. Once it has made its decision, the kube-scheduler informs the kube-apiserver, which in turn communicates with the kubelet on the chosen node to start the pod's containers and begin running the workload.
+     Kuber Control Manager : The kube-control-manager is a collection of controllers that manage various aspects of the Kubernetes cluster. These controllers include the node controller, which watches the state of nodes in the cluster and takes actions to ensure that nodes are stable and healthy. For example,
+                              if a node fails, the node controller will take actions to ensure that the workloads running on
+                              the failed node are rescheduled onto other nodes in the cluster. Other controllers in the kube-
+                              control-manager include the replication controller, endpoint controller, and service account and token controllers, which manage other aspects of the cluster such as scaling, networking, and security
+
+Worker Node : 
+  kubelet : The kubelet is the primary node agent that runs on each worker node in the Kubernetes cluster. It is responsible for managing and monitoring the state of containers running on
+            the node, as well as ensuring that the containers are healthy and running as expected. The kubelet communicates with the kube-apiserver to receive instructions on which pods to run on the node, and reports back to the master node with updates on the status of the
+            containers and their health. Additionally, the kubelet also manages the networking and storage configurations for the containers running on the node
+  kubeproxy : The Kube-proxy is responsible for managing the networking and routing configurations for services within the cluster. In Kubernetes, a service functions as an abstraction layer that facilitates communication between pods in the cluster. When a service is established, Kubernetes generates a set of iptables rules on each node within the cluster. Managed by kube-proxy, these rules enable traffic to be accurately directed to the appropriate pods associated with the service, irrespective of the node they operate on. 
+              This ensures that communication between the pods and services is both reliable and efficient.
+  Container Run Time : The container runtime is responsible for running containers on each node in the cluster. The container runtime is a software component that manages the lifecycle of containers, including
+                      pulling container images from a registry, creating and starting containers, monitoring their health, and stopping or deleting them when they are no longer needed.
+
+
+4. what is deployment , replicaset, statefullset?  
+    Deployment : 
+    
+5. what is ingress?
+6. How will you define networking policy?
+7. How to restrict pod scheduling?
+8. How to define you existing SSL in GKE?
+9. How you are managing service accounts?
+10. Binary authorization ?
+11. Workload Identity ?
+12. How to integrate GKE with Cloud SQL or Bigquery?
+13. How will secure your cluster configuration?
+14. If master node failed ,what will happen?
+15. what are error your facing in GKE?
+16. 
