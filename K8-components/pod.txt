@@ -1,0 +1,24 @@
+Pod : 
+  Atomic unit or smallest “unit of work”of Kubernetes.
+● Pods are one or MORE containers that share volumes, a network namespace, and are a part of a single context
+
+
+#The smallest and simplest Kubernetes object, representing a single instance of a running process in your 
+cluster.
+ Purpose: Groups one or more containers (e.g., Docker 
+containers) that share the same network namespace and 
+storage volumes.
+ Key Features:
+o Containers in a pod share the same IP address and port 
+space.
+o Pods are ephemeral; when a pod is deleted, a new pod may 
+be created with a different IP.
+ Example –
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: my-pod 
+spec:
+  containers:
+- name: my-container 
+  image: nginx
