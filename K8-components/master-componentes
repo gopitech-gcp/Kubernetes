@@ -1,0 +1,74 @@
+API Server: 
+
+*Provides a forward facing REST interface into the 
+kubernetes control plane and datastore. 
+● All clients and other applications interact with 
+kubernetes strictly through the API Server.
+● Acts as the gatekeeper to the cluster by handling 
+authentication and authorization, request validation, 
+mutation, and admission control in addition to being the 
+front-end to the backing datastore
+
+Etcd:
+* etcd acts as the cluster datastore.
+● Purpose in relation to Kubernetes is to provide a strong, 
+consistent and highly available key-value store for 
+persisting cluster state.
+● Stores objects and config information
+
+Kuber Controller Manager : 
+
+*Serves as the primary daemon that 
+manages all core component control loops. 
+● Monitors the cluster state via the apiserver 
+and steers the cluster towards the 
+desired state. 
+
+Kuber Scheduler : 
+
+*Verbose policy-rich engine that evaluates workload 
+requirements and attempts to place it on a matching 
+resource.
+● Default scheduler uses bin packing.
+● Workload Requirements can include: general hardware 
+requirements, affinity/anti-affinity, labels, and other 
+various custom resource requirements.
+
+Kubelet : 
+  Acts as the node agent responsible for managing the 
+lifecycle of every pod on its host. 
+● Kubelet understands YAML container manifests that it 
+can read from several sources:
+○ file path
+○ HTTP Endpoint
+○ etcd watch acting on any changes
+○ HTTP Server mode accepting container manifests 
+over a simple API
+
+Kube-Proxy : 
+  Manages the network rules on each node.
+● Performs connection forwarding or load balancing for 
+Kubernetes cluster services.
+● Available Proxy Modes:
+○ Userspace
+○ iptables
+○ ipvs (default if supported
+
+Container Runtime:
+
+A container runtime is a CRI (Container Runtime 
+Interface) compatible application that executes and 
+manages containers. 
+○ Containerd (docker)
+○ Cri-o 
+○ Rkt
+○ Kata (formerly clear and hyper)
+○ Virtlet (VM CRI compatible runtime
+
+Cloud Controller Manager : 
+Daemon that provides cloud-provider specific 
+knowledge and integration capability into the core 
+control loop of Kubernetes.
+● The controllers include Node, Route, Service, and add 
+an additional controller to handle things such as 
+PersistentVolume Labels.
