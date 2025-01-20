@@ -1,0 +1,24 @@
+Services : 
+
+ Definition: A stable, permanent endpoint to access one or more 
+pods.
+ Purpose: Providesload balancing and service discovery for pods.
+ Key Features:
+5
+o Types: ClusterIP (default), NodePort, LoadBalancer, 
+ExternalName.
+o Abstracts away the dynamic nature of pod IPs.
+
+Example:
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: my-service 
+spec:
+  selector:
+    app: my-app 
+ports:
+- protocol: TCP 
+port: 80
+targetPort: 8080 
+type: ClusterIP
