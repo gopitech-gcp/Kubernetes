@@ -1,0 +1,32 @@
+1. Explain Architecture of GKE?
+2. How many type of cluster available in GKE?
+3. Define each components in master node?
+4. Define each components in worker node?
+5. What is latest version of GKE and how many nodes available?
+6. what are GKE objects you are using?
+7. explain each object in gke?
+8. how will restric pod scheduling?
+9. what is taint and toleration ?
+10. What is pod and node affinity?
+11. how will you secure your GKE and POD?
+12. how you are using service account in GKE?
+13. what is PV, PVC, SC?
+14. local data mount with container/pod?
+15. what are default namespace available in GKE?
+16. what will happen incase master node fails?
+17. how you are handing GKE cluster upgrade?
+18. what are error you are faced in GKE?
+19. How will you upgrade your application in GKE?
+20. Write HPA , VPA and definition?
+21. RBAC and work load identity?
+22. what is networking policy 
+22. what is CSI
+23. how to define the VPC and CIDR for GKE?
+24. if etcd pod fail what will happen?
+25. Version Upgrade command on GKE?
+    Upgrade control plan : gcloud container clusters upgrade CLUSTER_NAME --zone ZONE --master
+    Workder upgrade : gcloud container clusters upgrade CLUSTER_NAME --zone ZONE --node-pool NODE_POOL_NAME
+    Upgrade all nodes pool : gcloud container clusters upgrade CLUSTER_NAME --zone ZONE --all
+25. which location we can find cluster config in GKE?
+      /.kube/config
+      kubectl config current-context
