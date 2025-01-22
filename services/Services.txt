@@ -1,0 +1,36 @@
+Service types
+Kubernetes has several types of Services for different use cases and requirements. The major ones are:
+
+ClusterIP
+NodePort
+LoadBalancer
+
+ClusterIP: ClusterIP is the most basic and provides a reliable endpoint (name, IP, and port) on the internal Pod network. 
+---
+Nodeport : NodePort Services build on top of ClusterIP and allow external clients to connect via a port on every cluster node.
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: skippy           <<==== Registered with the internal cluster DNS (ClusterIP)
+    spec:
+      type: NodePort         <<==== Service type
+      ports:
+      - port: 8080           <<==== ClusterIP port
+        targetPort: 9000     <<==== Application port in container
+        nodePort: 30050      <<==== External port on every cluster node (NodePort)
+      selector:
+        app: hello-world
+---        
+Load Balance: LoadBalancers build on top of both and integrate with cloud load balancers for extremely simple access from the internet.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb               <<==== Registered with cluster DNS
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080           <<==== Load balancer port
+    targetPort: 9000     <<==== Application port inside container
+  selector:
+    project: tkb
