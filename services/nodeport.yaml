@@ -1,0 +1,18 @@
+Service	: A NodePort service is created, exposing a static port on all cluster nodes for external access.
+Pod/Deployment: The service forwards traffic to the pods that match the selector of the service.
+Firewall Rules	: Google Cloud configures firewall rules to allow access to the NodePort range (30000–32767) for external traffic.
+Load Balancing	: The service load balances traffic to all matching pods, but is simpler compared to external load balancers.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nodeport
+spec:
+  selector:
+    app: nginx  # The label selector to match the NGINX pods
+  ports:
+    - protocol: TCP
+      port: 80           # The port on which the service will be exposed internally
+      targetPort: 80      # The port on the container (NGINX)
+      nodePort: 30001     # The external port to expose on each node (must be in the range 30000-32767)
+  type: NodePort
