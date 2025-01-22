@@ -1,0 +1,17 @@
+In Google Kubernetes Engine (GKE), 
+A LoadBalancer service is used to expose an application to external traffic by provisioning an external load balancer, 
+such as the Google Cloud Load Balancer (GCLB). This type of service automatically integrates with the Google Cloud platform, 
+which provisions and configures the load balancer to distribute incoming traffic across the pods within your Kubernetes cluster.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-loadbalancer
+spec:
+  selector:
+    app: nginx  # The label selector to match the NGINX pods
+  ports:
+    - protocol: TCP
+      port: 80           # The port on which the service will be exposed internally
+      targetPort: 80      # The port on the container (NGINX)
+  type: LoadBalancer     # This creates a cloud load balancer
