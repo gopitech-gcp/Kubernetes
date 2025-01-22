@@ -1,0 +1,67 @@
+In Google Kubernetes Engine (GKE), Ingress is a Kubernetes API object that manages external access to services in a cluster, typically HTTP or HTTPS. 
+It provides a way to expose HTTP and HTTPS routes from outside the Kubernetes cluster to services within the cluster. 
+An Ingress controller is responsible for fulfilling the ingress, usually with a load balancer or reverse proxy, that manages traffic routing based on the rules defined in the Ingress object.
+
+Types of Ingress in GKE
+There are generally two types of Ingress in GKE:
+
+GKE Ingress (Google Cloud Load Balancer-based Ingress)
+Ingress with NGINX Ingress Controller (Custom Ingress)
+
+1. GKE Ingress (Google Cloud Load Balancer-based Ingress)
+This is the default and most commonly used Ingress type in GKE. 
+When you create an Ingress object in GKE, Google Kubernetes Engine automatically provisions a Google Cloud HTTP(S) Load Balancer (GCLB) to route traffic to the services based on the Ingress rules.
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"  # Specifies GKE's Ingress controller
+spec:
+  rules:
+  - host: my-app.example.com  # The domain for which traffic will be routed
+    http:
+      paths:
+      - path: /    # Default path
+        pathType: Prefix
+        backend:
+          service:
+            name: my-service  # The service to route traffic to
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - my-app.example.com  # The host for which SSL will be terminated
+    secretName: my-app-tls-secret  # The Kubernetes Secret containing the SSL certificate
+
+---------
+Ingress : nginix ingress
+NGINX Ingress provides more customization options and is suitable for use cases where advanced configurations, 
+like custom routing, rate limiting, and authentication, are required. It can also be used in any Kubernetes cluster, not just GKE.
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: "/"  # Rewrite URLs
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"  # Redirect HTTP to HTTPS
+spec:
+  rules:
+  - host: my-app.example.com
+    http:
+      paths:
+      - path: /app
+        pathType: Prefix
+        backend:
+          service:
+            name: my-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - my-app.example.com
+    secretName: my-app-tls-secret
+
+
