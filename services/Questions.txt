@@ -1,0 +1,11 @@
+1. What is kubernetes service ?
+2. How many type in services?
+3. Define all services type?
+4. Write Yaml file for each services?
+5. command to create services?
+
+gcloud container clusters get-credentials my-cluster --zone us-central1-a
+kubectl create deployment nginx --image=nginx
+kubectl expose deployment nginx --type=LoadBalancer --name=nginx-lb --port=80 --target-port=80
+
+
