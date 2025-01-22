@@ -1,0 +1,70 @@
+GKE Deployment 
+
+pipeline {
+    agent any
+    environment {
+        PROJECT_ID = 'your-project-id'         // GCP project ID
+        CLUSTER_NAME = 'your-cluster-name'     // GKE Cluster name
+        CLUSTER_ZONE = 'us-central1-a'         // GKE Cluster zone
+        GKE_SA_KEY = credentials('gcp-service-account-key') // Service account key stored in Jenkins
+        KUBECONFIG_FILE = '/tmp/kubeconfig'    // Temporary location to store kubeconfig
+    }
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // Checkout your repository (e.g., GitHub, GitLab)
+                git 'https://your-repository-url.git'
+            }
+        }
+
+        stage('Authenticate to GCP') {
+            steps {
+                // Use the GCP service account to authenticate
+                script {
+                    sh '''
+                    echo "$GKE_SA_KEY" > /tmp/gcp-service-account.json
+                    gcloud auth activate-service-account --key-file=/tmp/gcp-service-account.json
+                    gcloud config set project $PROJECT_ID
+                    '''
+                }
+            }
+        }
+
+        stage('Get GKE Credentials') {
+            steps {
+                // Authenticate with GKE cluster and get credentials for kubectl
+                script {
+                    sh '''
+                    gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE --project $PROJECT_ID
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy to GKE') {
+            steps {
+                // Use kubectl to deploy to the GKE cluster
+                script {
+                    sh '''
+                    kubectl apply -f k8s/deployment.yaml     # Apply Kubernetes resources (e.g., deployment.yaml)
+                    kubectl apply -f k8s/service.yaml         # Apply Kubernetes service (e.g., service.yaml)
+                    '''
+                }
+            }
+        }
+        
+        stage('Clean Up') {
+            steps {
+                // Optionally clean up any resources (remove service account JSON file)
+                script {
+                    sh 'rm -f /tmp/gcp-service-account.json'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()  // Clean workspace after pipeline execution
+        }
+    }
+}
