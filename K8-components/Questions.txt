@@ -20,13 +20,25 @@
 20. Write HPA , VPA and definition?
 21. RBAC and work load identity?
 22. what is networking policy 
-22. what is CSI
+22. what is CSI - Container storage interface
 23. how to define the VPC and CIDR for GKE?
 24. if etcd pod fail what will happen?
 25. Version Upgrade command on GKE?
+        Latest version : 1.29.4
     Upgrade control plan : gcloud container clusters upgrade CLUSTER_NAME --zone ZONE --master
     Workder upgrade : gcloud container clusters upgrade CLUSTER_NAME --zone ZONE --node-pool NODE_POOL_NAME
     Upgrade all nodes pool : gcloud container clusters upgrade CLUSTER_NAME --zone ZONE --all
 25. which location we can find cluster config in GKE?
       /.kube/config
       kubectl config current-context
+26. GKE Channel release version :
+        In Google Kubernetes Engine (GKE), the channel version refers to the release channel you choose for managing your cluster's Kubernetes versions. GKE offers different release channels to manage how quickly your cluster receives new versions of Kubernetes and updates, providing flexibility to balance stability and access to new features.
+GKE offers three main release channels:
+        Rapid Channel:
+Purpose: Designed for users who want early access to the latest Kubernetes features and updates.
+        Regular Channel:
+Purpose: Aimed at users who want a stable Kubernetes environment with a good balance between new features and reliability.
+        Stable Channel:
+Purpose: Targeted at users who need the highest stability and minimal disruption, with a preference for only well-tested Kubernetes versions
+
+    
