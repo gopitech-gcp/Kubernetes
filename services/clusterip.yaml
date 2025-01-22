@@ -1,0 +1,44 @@
+Cluster IP : Its a Default service in kubernetes 
+
+Definition: This is the default service type in Kubernetes.
+A ClusterIP service provides a stable, virtual IP (VIP) within the cluster, which acts as a proxy that forwards traffic to the appropriate backend pods.
+How it works: The ClusterIP service creates a single virtual IP address within the cluster that all clients (other pods) can use to access the service. 
+Kubernetes handles the load balancing and routing of traffic to the pods behind the service.
+DNS: Kubernetes creates a DNS entry for the service (e.g., my-service.default.svc.cluster.local), and the service name resolves to the ClusterIP (the virtual IP).
+Use case: This is used when you want to abstract the backend pods and access them via a stable, single IP.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-clusterip-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP  # Default, this is implicit if not specified
+
+
+Headless Services : 
+Headless Service
+Definition: A headless service is a service with no ClusterIP. 
+It’s defined by setting clusterIP: None in the service specification. Instead of providing a virtual IP, a headless service directly exposes each pod behind it.
+How it works: When you create a headless service, Kubernetes doesn’t create a single virtual IP to route traffic to the pods. 
+Instead, DNS queries for the service return a list of the pod IPs (typically A records), allowing clients to directly access the individual pods.
+DNS: For a headless service, Kubernetes creates DNS records for each pod. For example, if you have a headless service my-service and three pods, DNS queries for my-service.default.svc.cluster.local might return a list of individual pod IPs (e.g., pod-1.default.svc.cluster.local, pod-2.default.svc.cluster.local, etc.).
+Use case: This is useful when you want direct access to individual pods, or if you want a stateful application where each pod is uniquely identifiable (like StatefulSets), or for custom load balancing or service discovery scenarios.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-headless-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  clusterIP: None  # This makes the service headless
